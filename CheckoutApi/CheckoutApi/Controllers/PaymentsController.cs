@@ -47,11 +47,23 @@ namespace ThiagoCampos.CheckoutApi.Controllers
             return payment == null ? NotFound() : (ActionResult<Payment>)payment;
         }
 
+        /// <summary>
+        /// Submits a payment
+        /// </summary>
+        /// <param name="paymentRequest">Payment being submitted</param>
+        /// <returns>Result of the payment request</returns>
+        /// <response code="201">Success status along with the generated route of the payment in the header</response>
+        /// <response code="409">If the payment cannot be received due to the existence of a previous one with the same unique identifier</response>            
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(409)]
         public async Task<ActionResult> Post([FromBody] Payment paymentRequest)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if ((await _context.Payments.FindAsync(paymentRequest.Id)) != null)
             {
                 return Conflict();
@@ -60,7 +72,7 @@ namespace ThiagoCampos.CheckoutApi.Controllers
             _context.Payments.Add(paymentRequest);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return CreatedAtRoute(nameof(Get), new { id = paymentRequest.Id });
         }
 
         [HttpPut("{id}")]
@@ -76,17 +88,23 @@ namespace ThiagoCampos.CheckoutApi.Controllers
         /// </summary>
         /// <param name="id">Unique identifier of the payment</param>
         /// <returns>Recorded payment</returns>
-        /// <response code="200">Returns the payment data</response>
+        /// <response code="204">If the delete action was executed</response>
         /// <response code="404">If the item is not found</response>            
         [HttpDelete]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(Guid id)
         {
             var payment = await _context.Payments.FindAsync(id);
-            _context.Payments.Remove(payment);
+            if (payment == null)
+            {
+                return NotFound();
+            }
+
+            payment.Visible = false;
+            _context.Payments.Update(payment);
             await _context.SaveChangesAsync();
-            return payment == null ? (StatusCodeResult)NotFound() : Ok();
+            return NoContent();
         }
     }
 }

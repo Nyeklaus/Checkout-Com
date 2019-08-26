@@ -1,4 +1,5 @@
-﻿using HealthChecks.UI.Client;
+﻿using FluentValidation.AspNetCore;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
 using System.IO;
 using System.Reflection;
+using ThiagoCampos.CheckoutApi.Validators;
 using ThiagoCampos.DataAccess;
 
 namespace ThiagoCampos.CheckoutApi
@@ -58,7 +60,10 @@ namespace ThiagoCampos.CheckoutApi
                 }
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining(typeof(CheckoutApiValidator<>)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
