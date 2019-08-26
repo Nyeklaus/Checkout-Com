@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ThiagoCampos.Model</name>
+    </assembly>
+    <members>
+        <member name="T:ThiagoCampos.Model.Payment">
+            <summary>
+            Payment data
+            </summary>
+        </member>
+        <member name="P:ThiagoCampos.Model.Payment.Id">
+            <summary>
+            Unique identifier of the payment request
+            </summary>
+        </member>
+        <member name="P:ThiagoCampos.Model.Payment.Visible">
+            <summary>
+            Defines if the payment is still generally visible in the platform
+            </summary>
+        </member>
+        <member name="P:ThiagoCampos.Model.Payment.Value">
+            <summary>
+            Value of the purchase
+            </summary>
+        </member>
+        <member name="P:ThiagoCampos.Model.Payment.ISOCurrencyCode">
+            <summary>
+            ISO code of the currency of the payment
+            </summary>
+        </member>
+        <member name="P:ThiagoCampos.Model.Payment.SubmissionDate">
+            <summary>
+            Date and time when the payment was submitted
+            </summary>
+        </member>
+    </members>
+</doc>
