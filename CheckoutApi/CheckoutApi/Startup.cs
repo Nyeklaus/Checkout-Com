@@ -26,7 +26,7 @@ namespace ThiagoCampos.CheckoutApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CheckoutContext>(opt => opt.UseInMemoryDatabase("CheckoutMemDb"));
+            services.AddDbContext<CheckoutContext>(opt => opt.UseInMemoryDatabase("CheckoutMemDb"), ServiceLifetime.Singleton, ServiceLifetime.Singleton);
             services
                 .AddHealthChecks()
                 .AddCheck<SelfHealthCheck>("InternalCheck", HealthStatus.Degraded, tags: new[] { "https://www.treinaweb.com.br/blog/verificando-a-integridade-da-aplicacao-asp-net-core-com-health-checks/" });

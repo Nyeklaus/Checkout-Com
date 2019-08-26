@@ -26,7 +26,7 @@ namespace ThiagoCampos.CheckoutApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Payment>>> Get()
+        public async Task<ActionResult<IEnumerable<Payment>>> GetAll()
         {
             return await _context.Payments.ToListAsync();
         }
@@ -37,8 +37,8 @@ namespace ThiagoCampos.CheckoutApi.Controllers
         /// <param name="id">Unique identifier of the payment</param>
         /// <returns>Recorded payment</returns>
         /// <response code="200">Returns the payment data</response>
-        /// <response code="404">If the item is not found</response>            
-        [HttpPost]
+        /// <response code="404">If the item is not found</response>
+        [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<Payment>> Get(Guid id)
@@ -47,19 +47,27 @@ namespace ThiagoCampos.CheckoutApi.Controllers
             return payment == null ? NotFound() : (ActionResult<Payment>)payment;
         }
 
-        [HttpPut("{id}")]
+        [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(409)]
-        public async Task<ActionResult> Put(int id, [FromBody] Payment paymentRequest)
+        public async Task<ActionResult> Post([FromBody] Payment paymentRequest)
         {
-            var payment = await _context.Payments.FindAsync(id);
-            if (payment == null)
+            if ((await _context.Payments.FindAsync(paymentRequest.Id)) != null)
             {
                 return Conflict();
             }
 
-            _context.Payments.Add(payment);
+            _context.Payments.Add(paymentRequest);
+            await _context.SaveChangesAsync();
 
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(409)]
+        public async Task<ActionResult> Put(Guid id, [FromBody] Payment paymentRequest)
+        {
             return Ok();
         }
 
@@ -77,6 +85,7 @@ namespace ThiagoCampos.CheckoutApi.Controllers
         {
             var payment = await _context.Payments.FindAsync(id);
             _context.Payments.Remove(payment);
+            await _context.SaveChangesAsync();
             return payment == null ? (StatusCodeResult)NotFound() : Ok();
         }
     }

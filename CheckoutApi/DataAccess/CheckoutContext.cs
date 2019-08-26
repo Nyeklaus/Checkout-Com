@@ -25,8 +25,8 @@ namespace ThiagoCampos.DataAccess
         {
             var fixture = new Fixture();
             fixture.Customize<Payment>(f => f
-                .With(p => p.Visible, f.Create<byte>() % 2 == 0)
-                .With(p => p.SubmissionDate, DateTime.Now.AddTicks((f.Create<long>() % DateTime.Now.AddYears(-1).Ticks) * -1))
+                .With(p => p.Visible, fixture.Create<byte>() % 2 == 0)
+                .With(p => p.SubmissionDate, DateTime.Now.AddTicks(fixture.Create<long>() % DateTime.Now.AddYears(-1).Ticks * -1))
             );
 
             Payments.AddRange(fixture.CreateMany<Payment>(paymentCount));
