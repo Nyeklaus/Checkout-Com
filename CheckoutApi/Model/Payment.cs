@@ -1,8 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace ThiagoCampos.Model
+﻿namespace ThiagoCampos.Model
 {
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// Payment data
     /// </summary>
@@ -16,7 +17,8 @@ namespace ThiagoCampos.Model
         /// <summary>
         /// Defines if the payment is still generally visible in the platform
         /// </summary>
-        public bool Visible { get; set; }
+        [DefaultValue(true)]
+        public bool Visible { get; set; } = true;
 
         /// <summary>
         /// Value of the purchase
@@ -26,6 +28,7 @@ namespace ThiagoCampos.Model
         /// <summary>
         /// ISO code of the currency of the payment
         /// </summary>
+        [StringLength(3, MinimumLength = 2)]
         public string ISOCurrencyCode { get; set; }
 
         /// <summary>

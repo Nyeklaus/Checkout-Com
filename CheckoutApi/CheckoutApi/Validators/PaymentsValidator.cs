@@ -8,7 +8,7 @@ namespace ThiagoCampos.CheckoutApi.Validators
         public PaymentsValidator()
         {
             RuleFor(x => x.Id).NotEmpty().WithErrorCode("PaymentIdEmpty");
-            RuleFor(x => x.ISOCurrencyCode).NotEmpty().Length(2, 3).WithErrorCode("PaymentISOCurrencyInvalid");
+            RuleFor(x => x.ISOCurrencyCode).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty().WithErrorCode("PaymentISOCurrencyInvalid").Length(2, 3).WithErrorCode("PaymentISOCurrencyInvalidLength");
             RuleFor(x => x.Value).GreaterThan(0).WithErrorCode("PaymentValueNotPositive");
         }
     }
