@@ -1,7 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>CheckoutApi.Client</PackageId>
+    <Authors>Thiago Chaves Campos</Authors>
+    <Company>TCC Model Solution</Company>
+    <Product>CheckoutApi.Client</Product>
+    <PackageProjectUrl>https://github.com/Nyeklaus/Checkout-Com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Nyeklaus/Checkout-Com.git</RepositoryUrl>
+    <AssemblyName>CheckoutApi.Client</AssemblyName>
+    <RootNamespace>CheckoutApi.Client</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
 
 </Project>
