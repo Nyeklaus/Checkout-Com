@@ -14,7 +14,7 @@ namespace CheckoutApiTest
         private Fixture Fixture { get; } = new Fixture();
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenNull_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenNull_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var result = await validator.ValidateAsync((Payment)null);
@@ -22,7 +22,7 @@ namespace CheckoutApiTest
         }
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenIdEmpty_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenIdEmpty_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var payment = this.Fixture.Build<Payment>().With(p => p.Id, Guid.Empty).Create();
@@ -31,7 +31,7 @@ namespace CheckoutApiTest
         }
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenISOCurrencyCodeNull_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenISOCurrencyCodeNull_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var payment = this.Fixture.Build<Payment>().Without(p => p.ISOCurrencyCode).Create();
@@ -40,7 +40,7 @@ namespace CheckoutApiTest
         }
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenISOCurrencyCodeEmpty_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenISOCurrencyCodeEmpty_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var payment = this.Fixture.Build<Payment>().With(p => p.ISOCurrencyCode, string.Empty).Create();
@@ -49,7 +49,7 @@ namespace CheckoutApiTest
         }
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenISOCurrencyCodeTooShort_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenISOCurrencyCodeTooShort_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var payment = this.Fixture.Create<Payment>();
@@ -59,7 +59,7 @@ namespace CheckoutApiTest
         }
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenISOCurrencyCodeTooLong_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenISOCurrencyCodeTooLong_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var payment = this.Fixture.Create<Payment>();
@@ -69,7 +69,7 @@ namespace CheckoutApiTest
         }
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenValueZero_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenValueZero_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var payment = this.Fixture.Build<Payment>().With(p => p.Value, 0).Create();
@@ -78,7 +78,7 @@ namespace CheckoutApiTest
         }
 
         [TestMethod]
-        public async Task PaymentsValidator_WhenValueNegative_MustReturnCorrespondentErrorMessage()
+        public async Task Payment_WhenValueNegative_MustReturnCorrespondentErrorMessage()
         {
             var validator = new PaymentsValidator();
             var payment = this.Fixture.Build<Payment>().With(p => p.Value, this.Fixture.Create<byte>() * -1).Create();
