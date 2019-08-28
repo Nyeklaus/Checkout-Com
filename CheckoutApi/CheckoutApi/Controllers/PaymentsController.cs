@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -75,12 +76,30 @@ namespace ThiagoCampos.CheckoutApi.Controllers
             return CreatedAtRoute(nameof(Get), new { id = paymentRequest.Id });
         }
 
-        [HttpPut("{id}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(409)]
-        public async Task<ActionResult> Put(Guid id, [FromBody] Payment paymentRequest)
+
+        [HttpPatch("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<Payment> paymentPatch)
         {
-            return Ok();
+            var payment = await _context.Payments.FindAsync(id);
+            if (payment == null)
+            {
+                return NotFound();
+            }
+
+            paymentPatch.ApplyTo(payment, ModelState);
+            TryValidateModel(payment);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Payments.Update(payment);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
         /// <summary>

@@ -34,5 +34,10 @@
             Date and time when the payment was submitted
             </summary>
         </member>
+        <member name="P:ThiagoCampos.Model.Payment.State">
+            <summary>
+            Current state of the payment
+            </summary>
+        </member>
     </members>
 </doc>

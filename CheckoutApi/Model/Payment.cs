@@ -35,5 +35,10 @@
         /// Date and time when the payment was submitted
         /// </summary>
         public DateTime SubmissionDate { get; set; }
+
+        /// <summary>
+        /// Current state of the payment
+        /// </summary>
+        public PaymentState State { get; set; }
     }
 }
