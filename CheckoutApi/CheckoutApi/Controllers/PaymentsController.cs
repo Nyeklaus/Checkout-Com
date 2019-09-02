@@ -109,7 +109,7 @@ namespace ThiagoCampos.CheckoutApi.Controllers
         /// <returns>Recorded payment</returns>
         /// <response code="204">If the delete action was executed</response>
         /// <response code="404">If the item is not found</response>            
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> Delete(Guid id)
